@@ -65,8 +65,8 @@ class PortForward:
         import configparser
         cp = configparser.ConfigParser()
         cp.read(config_file)
-        return cls(listen_host=cp.get("listen", "host"), listen_port=cp.get("listen", "port"),
-                   conn_host=cp.get("connection", "host"), conn_port=cp.get("connection", "port"))
+        return cls(listen_host=cp.get("listen", "host"), listen_port=int(cp.get("listen", "port")),
+                   conn_host=cp.get("connection", "host"), conn_port=int(cp.get("connection", "port")))
 
     def start(self):
         self.sock_listen.listen()
