@@ -65,13 +65,15 @@ class PortForward:
         import configparser
         cp = configparser.ConfigParser()
         cp.read(config_file)
-        return cls(listen_host=cp.get("listen", "host"), listen_port=int(cp.get("listen", "port")),
-                   conn_host=cp.get("connection", "host"), conn_port=int(cp.get("connection", "port")))
+        print(cp.__dict__["_sections"])
+        return cls(listen_host=cp.get("listen", "host"), listen_port=cp.getint("listen", "port"),
+                   conn_host=cp.get("connection", "host"), conn_port=cp.getint("connection", "port"))
 
     def start(self):
         self.sock_listen.listen()
 
     def close(self):
+        print("")
         print("SOCKET HANDLE", *self.sock_listen.getsockname(), "CLOSED.")
         self.sock_listen.shutdown(1)
         self.sock_listen.close()
